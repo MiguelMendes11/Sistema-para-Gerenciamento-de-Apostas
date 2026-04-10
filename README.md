@@ -1,5 +1,5 @@
 # Sistema-Para-Gerenciamento-de-Apostas
-Trabalho de POO
+Trabalho de Programação Orientada a Objeto
 
 ## 📌 Descrição
 Este projeto foi desenvolvido em Java como trabalho da disciplina de Programação Orientada a Objetos (POO).  
