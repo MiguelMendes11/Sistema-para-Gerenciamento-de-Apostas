@@ -12,7 +12,7 @@ O sistema simula o gerenciamento de campeonatos, grupos, participantes e apostas
 O sistema segue a seguinte sequência de utilização:
 
 1. **Criar Campeonato**
-   - É necessário possuir **8 clubes cadastrados previamente**.
+   - **8 clubes cadastrados previamente**.
 
 2. **Criar Grupo**
    - Após a criação do campeonato, é possível criar grupos.
@@ -27,6 +27,7 @@ O sistema segue a seguinte sequência de utilização:
    - O usuário deve selecionar:
      - Um participante
      - Uma partida
+     - Adicionar o placar
    - A aposta é então registrada no sistema.
 
 5. **Finalizar Partida**
