@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 
 class Campeonato {
+
     private String nome;
     private ArrayList<Clube> clubes;
 
@@ -9,7 +10,12 @@ class Campeonato {
         this.clubes = new ArrayList<>();
     }
 
+    public String getNome() {
+        return nome;
+    }
+
     public void adicionarClube(Clube clube) {
+
         if (clubes.size() < 8) {
             clubes.add(clube);
             System.out.println("Clube adicionado: " + clube.getNome());
@@ -19,7 +25,9 @@ class Campeonato {
     }
 
     public void listarClubes() {
+
         System.out.println("Clubes do campeonato:");
+
         for (Clube c : clubes) {
             System.out.println("- " + c.getNome());
         }

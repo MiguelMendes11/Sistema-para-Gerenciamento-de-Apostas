@@ -20,10 +20,10 @@ public class TelaPrincipal extends JFrame {
 
     public TelaPrincipal() {
         setTitle("Sistema de Apostas");
-        setSize(500, 500);
+        setSize(500, 750);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-        setLayout(new GridLayout(9, 1));
+        setLayout(new GridLayout(13, 1));
 
         partidas.add(new Partida(c1, c2, "10/04/2026", "20:00"));
         partidas.add(new Partida(c3, c4, "11/04/2026", "18:00"));
@@ -38,6 +38,11 @@ public class TelaPrincipal extends JFrame {
         JButton b6 = new JButton("Ver Classificação");
         JButton b7 = new JButton("Ver Partidas");
         JButton b8 = new JButton("Finalizar Partida");
+        JButton b9 = new JButton("Ver Participantes do Banco");
+        JButton b10 = new JButton("Ranking Geral do Banco");
+        JButton b11 = new JButton("Histórico de Apostas");
+        JButton b12 = new JButton("Ver Grupos do Banco");
+        JButton b13 = new JButton("Ver Campeonatos do Banco");
 
         add(b1);
         add(b2);
@@ -47,6 +52,11 @@ public class TelaPrincipal extends JFrame {
         add(b6);
         add(b7);
         add(b8);
+        add(b9);
+        add(b10);
+        add(b11);
+        add(b12);
+        add(b13);
 
         // botão 1
         b1.addActionListener(e -> {
@@ -64,7 +74,10 @@ public class TelaPrincipal extends JFrame {
             camp.adicionarClube(c7);
             camp.adicionarClube(c8);
 
-            String msg = "Campeonato criado: " + nome + "\n\nClubes:\n"
+            CampeonatoDAO dao = new CampeonatoDAO();
+            dao.salvar(camp);
+
+            String msg = "Campeonato criado e salvo no banco: " + nome + "\n\nClubes:\n"
                     + c1.getNome() + "\n"
                     + c2.getNome() + "\n"
                     + c3.getNome() + "\n"
@@ -92,8 +105,13 @@ public class TelaPrincipal extends JFrame {
             String nome = JOptionPane.showInputDialog("Nome do grupo:");
             if (nome == null || nome.trim().isEmpty()) return;
 
-            grupos.add(new Grupo(nome));
-            JOptionPane.showMessageDialog(null, "Grupo criado!");
+            Grupo grupo = new Grupo(nome);
+            grupos.add(grupo);
+
+            GrupoDAO dao = new GrupoDAO();
+            dao.salvar(grupo);
+
+            JOptionPane.showMessageDialog(null, "Grupo criado e salvo no banco!");
         });
 
         // botão 3
@@ -130,8 +148,14 @@ public class TelaPrincipal extends JFrame {
             String nome = JOptionPane.showInputDialog(lista + "\nNome:");
             if (nome == null || nome.trim().isEmpty()) return;
 
-            g.adicionarParticipante(new Participante(nome));
-            JOptionPane.showMessageDialog(null, "Adicionado!");
+            Participante participante = new Participante(nome);
+
+            g.adicionarParticipante(participante);
+
+            ParticipanteDAO dao = new ParticipanteDAO();
+            dao.salvar(participante);
+
+            JOptionPane.showMessageDialog(null, "Participante adicionado e salvo no banco!");
         });
 
         // botão 4
@@ -199,7 +223,10 @@ public class TelaPrincipal extends JFrame {
 
                 apostas.add(aposta);
 
-                JOptionPane.showMessageDialog(null, "Aposta registrada!");
+                ApostaDAO dao = new ApostaDAO();
+                dao.salvar(aposta);
+
+                JOptionPane.showMessageDialog(null, "Aposta registrada e salva no banco!");
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(null, "Erro!");
             }
@@ -239,9 +266,12 @@ public class TelaPrincipal extends JFrame {
 
                 p.setResultado(gc, gv);
 
+                ParticipanteDAO dao = new ParticipanteDAO();
+
                 for (Aposta a : apostas) {
                     if (a.getPartida() == p) {
                         a.calcularPontos();
+                        dao.atualizarPontos(a.getParticipante());
                     }
                 }
 
@@ -270,8 +300,7 @@ public class TelaPrincipal extends JFrame {
 
             if (index == -1) return;
 
-            JOptionPane.showMessageDialog(null,
-                    grupos.get(index).getClassificacao());
+            JOptionPane.showMessageDialog(null, grupos.get(index).getClassificacao());
         });
 
         // botão 7
@@ -313,9 +342,61 @@ public class TelaPrincipal extends JFrame {
                 JOptionPane.showMessageDialog(null, "Partida finalizada!");
             }
         });
+
+        // botão 9
+        b9.addActionListener(e -> {
+            ParticipanteDAO dao = new ParticipanteDAO();
+            String participantesBanco = dao.listarParticipantes();
+
+            JOptionPane.showMessageDialog(null, participantesBanco);
+        });
+
+        // botão 10
+        b10.addActionListener(e -> {
+            ParticipanteDAO dao = new ParticipanteDAO();
+            String ranking = dao.rankingGeral();
+
+            JOptionPane.showMessageDialog(null, ranking);
+        });
+
+        // botão 11
+        b11.addActionListener(e -> {
+            ApostaDAO dao = new ApostaDAO();
+            String historico = dao.listarApostas();
+
+            JOptionPane.showMessageDialog(null, historico);
+        });
+
+        // botão 12
+        b12.addActionListener(e -> {
+            GrupoDAO dao = new GrupoDAO();
+            String gruposBanco = dao.listarGrupos();
+
+            JOptionPane.showMessageDialog(null, gruposBanco);
+        });
+
+        // botão 13
+        b13.addActionListener(e -> {
+            CampeonatoDAO dao = new CampeonatoDAO();
+            String campeonatosBanco = dao.listarCampeonatos();
+
+            JOptionPane.showMessageDialog(null, campeonatosBanco);
+        });
     }
 
     public static void main(String[] args) {
+        ParticipanteDAO participanteDAO = new ParticipanteDAO();
+        participanteDAO.criarTabela();
+
+        ApostaDAO apostaDAO = new ApostaDAO();
+        apostaDAO.criarTabela();
+
+        GrupoDAO grupoDAO = new GrupoDAO();
+        grupoDAO.criarTabela();
+
+        CampeonatoDAO campeonatoDAO = new CampeonatoDAO();
+        campeonatoDAO.criarTabela();
+
         new TelaPrincipal().setVisible(true);
     }
 }

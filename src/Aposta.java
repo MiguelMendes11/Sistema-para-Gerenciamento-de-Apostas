@@ -1,4 +1,5 @@
 class Aposta {
+
     private Participante participante;
     private Partida partida;
     private int palpiteCasa;
@@ -47,11 +48,9 @@ class Aposta {
         }
 
         if (resultadoPalpite == resultadoReal) {
-            if (palpiteCasa == partida.getGolsCasa() &&
-                    palpiteVisitante == partida.getGolsVisitante()) {
-
+            if (palpiteCasa == partida.getGolsCasa()
+                    && palpiteVisitante == partida.getGolsVisitante()) {
                 participante.adicionarPontos(10);
-
             } else {
                 participante.adicionarPontos(5);
             }
