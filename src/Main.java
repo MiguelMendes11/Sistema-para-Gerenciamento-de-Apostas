@@ -21,6 +21,9 @@ public class Main {
         GrupoDAO grupoDAO = new GrupoDAO();
         grupoDAO.criarTabela();
 
+        CampeonatoDAO campeonatoDAO = new CampeonatoDAO();
+        campeonatoDAO.criarTabela();
+
         new TelaPrincipal().setVisible(true);
     }
 }

@@ -1,4 +1,4 @@
-class Clube {
+public class Clube {
     private String nome;
 
     public Clube(String nome) {

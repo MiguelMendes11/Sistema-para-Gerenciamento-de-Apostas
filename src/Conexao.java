@@ -4,8 +4,6 @@ import java.sql.SQLException;
 
 public class Conexao {
 
-    private static Connection conexao;
-
     private static final String URL = "jdbc:h2:./bancoApostas";
     private static final String USER = "sa";
     private static final String PASSWORD = "";
@@ -14,24 +12,11 @@ public class Conexao {
     }
 
     public static Connection conectar() {
-
         try {
-
-            if (conexao == null || conexao.isClosed()) {
-
-                conexao = DriverManager.getConnection(
-                        URL,
-                        USER,
-                        PASSWORD
-                );
-
-                System.out.println("Conexão criada com sucesso!");
-            }
-
+            return DriverManager.getConnection(URL, USER, PASSWORD);
         } catch (SQLException e) {
             e.printStackTrace();
+            return null;
         }
-
-        return conexao;
     }
 }

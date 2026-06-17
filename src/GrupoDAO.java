@@ -43,6 +43,18 @@ public class GrupoDAO {
         }
     }
 
+    public void deletar(String nome) {
+        String sql = "DELETE FROM GRUPO_APOSTA WHERE NOME = ?";
+        try (Connection conn = Conexao.conectar();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, nome);
+            stmt.executeUpdate();
+            System.out.println("Grupo \"" + nome + "\" excluído do banco!");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public String listarGrupos() {
 
         String sql = "SELECT * FROM GRUPO_APOSTA";

@@ -1,13 +1,15 @@
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-class Partida {
+public class Partida {
+    private static final int MINUTOS_LIMITE_APOSTA = 20;
+
     private Clube casa;
     private Clube visitante;
     private int golsCasa;
     private int golsVisitante;
     private boolean finalizada;
-    private boolean resultadoRegistrado; // 🔥 evita duplicar resultado
+    private boolean resultadoRegistrado;
 
     private LocalDateTime dataHora;
 
@@ -24,7 +26,7 @@ class Partida {
 
     public boolean podeApostar() {
         LocalDateTime agora = LocalDateTime.now();
-        return agora.isBefore(dataHora.minusMinutes(20));
+        return agora.isBefore(dataHora.minusMinutes(MINUTOS_LIMITE_APOSTA));
     }
 
     public boolean podeRegistrarResultado() {
@@ -34,7 +36,6 @@ class Partida {
 
     public void finalizarPartida() {
         if (this.finalizada) {
-            System.out.println("Partida já foi finalizada!");
             return;
         }
         this.finalizada = true;
@@ -43,12 +44,10 @@ class Partida {
     public void setResultado(int golsCasa, int golsVisitante) {
 
         if (!this.finalizada) {
-            System.out.println("Finalize a partida antes de registrar o resultado!");
             return;
         }
 
         if (resultadoRegistrado) {
-            System.out.println("Resultado já foi registrado!");
             return;
         }
 
@@ -59,7 +58,6 @@ class Partida {
 
     public int getResultado() {
         if (!resultadoRegistrado) {
-            System.out.println("Resultado ainda não registrado!");
             return -1;
         }
 

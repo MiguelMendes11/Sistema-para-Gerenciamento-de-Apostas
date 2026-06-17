@@ -65,6 +65,18 @@ public class ParticipanteDAO {
         }
     }
 
+    public void deletar(String nome) {
+        String sql = "DELETE FROM PARTICIPANTE WHERE NOME = ?";
+        try (Connection conn = Conexao.conectar();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, nome);
+            stmt.executeUpdate();
+            System.out.println("Participante \"" + nome + "\" excluído do banco!");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public String listarParticipantes() {
 
         String sql = "SELECT * FROM PARTICIPANTE";

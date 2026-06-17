@@ -1,9 +1,12 @@
 import java.util.ArrayList;
+import java.util.List;
 
-class Campeonato {
+public class Campeonato {
+
+    private static final int LIMITE_CLUBES = 8;
 
     private String nome;
-    private ArrayList<Clube> clubes;
+    private List<Clube> clubes;
 
     public Campeonato(String nome) {
         this.nome = nome;
@@ -14,22 +17,14 @@ class Campeonato {
         return nome;
     }
 
-    public void adicionarClube(Clube clube) {
-
-        if (clubes.size() < 8) {
-            clubes.add(clube);
-            System.out.println("Clube adicionado: " + clube.getNome());
-        } else {
-            System.out.println("Limite de 8 clubes atingido!");
-        }
+    public List<Clube> getClubes() {
+        return clubes;
     }
 
-    public void listarClubes() {
+    public void adicionarClube(Clube clube) {
 
-        System.out.println("Clubes do campeonato:");
-
-        for (Clube c : clubes) {
-            System.out.println("- " + c.getNome());
+        if (clubes.size() < LIMITE_CLUBES) {
+            clubes.add(clube);
         }
     }
 }

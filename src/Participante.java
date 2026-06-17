@@ -1,4 +1,4 @@
-class Participante extends Pessoa {
+public class Participante extends Pessoa {
     private int pontos;
 
     public Participante(String nome) {

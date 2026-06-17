@@ -1,10 +1,13 @@
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 
-class Grupo {
+public class Grupo {
+    private static final int LIMITE_PARTICIPANTES = 5;
+
     private String nome;
-    private ArrayList<Participante> participantes;
+    private List<Participante> participantes;
 
     public Grupo(String nome) {
         this.nome = nome;
@@ -15,16 +18,13 @@ class Grupo {
         return nome;
     }
 
-    public ArrayList<Participante> getParticipantes() {
+    public List<Participante> getParticipantes() {
         return participantes;
     }
 
     public void adicionarParticipante(Participante p) {
-        if (participantes.size() < 5) {
+        if (participantes.size() < LIMITE_PARTICIPANTES) {
             participantes.add(p);
-            System.out.println("Participante adicionado!");
-        } else {
-            System.out.println("Grupo cheio (máx 5 participantes)!");
         }
     }
 
@@ -33,7 +33,6 @@ class Grupo {
             return "Nenhum participante no grupo.";
         }
 
-        // ordenar o ranking
         Collections.sort(participantes, new Comparator<Participante>() {
             @Override
             public int compare(Participante p1, Participante p2) {
@@ -49,9 +48,5 @@ class Grupo {
         }
 
         return texto;
-    }
-
-    public void mostrarClassificacao() {
-        System.out.println(getClassificacao());
     }
 }

@@ -1,4 +1,6 @@
-class Aposta {
+public class Aposta {
+    private static final int PONTOS_ACERTO_EXATO = 10;
+    private static final int PONTOS_ACERTO_VENCEDOR = 5;
 
     private Participante participante;
     private Partida partida;
@@ -30,12 +32,12 @@ class Aposta {
         return palpiteVisitante;
     }
 
-    public void calcularPontos() {
-        if (pontuada) return;
+    public int calcularPontos() {
+        if (pontuada) return 0;
 
         int resultadoReal = partida.getResultado();
 
-        if (resultadoReal == -1) return;
+        if (resultadoReal == -1) return 0;
 
         int resultadoPalpite;
 
@@ -50,12 +52,17 @@ class Aposta {
         if (resultadoPalpite == resultadoReal) {
             if (palpiteCasa == partida.getGolsCasa()
                     && palpiteVisitante == partida.getGolsVisitante()) {
-                participante.adicionarPontos(10);
+                participante.adicionarPontos(PONTOS_ACERTO_EXATO);
+                pontuada = true;
+                return PONTOS_ACERTO_EXATO;
             } else {
-                participante.adicionarPontos(5);
+                participante.adicionarPontos(PONTOS_ACERTO_VENCEDOR);
+                pontuada = true;
+                return PONTOS_ACERTO_VENCEDOR;
             }
         }
 
         pontuada = true;
+        return 0;
     }
 }
